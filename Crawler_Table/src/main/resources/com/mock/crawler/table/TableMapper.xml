@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mock.crawler.dao.TableDao">
+    <resultMap id="base" type="com.mock.crawler.Model.Table">
+        <id column="id" property="id"/>
+        <result property="administrativeDistrict" column="administrative_district"/>
+        <result property="areaNumber" column="area_number"/>
+        <result property="type" column="type"/>
+        <result property="url" column="url"/>
+        <result property="parent" column="parent"/>
+        <result property="typeCode" column="type_code"/>
+    </resultMap>
+    <select id="findUrlList" resultMap="base">
+        SELECT * FROM x_administrative_region WHERE type = #{parent}
+    </select>
+    <insert id="insert">
+        insert into x_administrative_region
+        <trim suffixOverrides="," suffix=")" prefix="(" >
+            <if test="administrativeDistrict!=null">
+                administrative_district,
+            </if>
+            <if test="areaNumber!=null">
+                area_number,
+            </if>
+            <if test="type!=null">
+                type,
+            </if>
+            <if test="url!=null">
+                url,
+            </if>
+            <if test="parent!=null">
+                parent,
+            </if>
+            <if test="typeCode!=null">
+                type_code,
+            </if>
+        </trim>
+        <trim suffixOverrides="," suffix=")" prefix="values(" >
+            <if test="administrativeDistrict!=null">
+                #{administrativeDistrict},
+            </if>
+            <if test="areaNumber!=null">
+                #{areaNumber},
+            </if>
+            <if test="type!=null">
+                #{type},
+            </if>
+            <if test="url!=null">
+                #{url},
+            </if>
+            <if test="parent!=null">
+                #{parent},
+            </if>
+            <if test="typeCode!=null">
+                #{typeCode},
+            </if>
+        </trim>
+    </insert>
+    <select id="findAdminList" resultType="com.mock.crawler.Model.AdminModel">
+        SELECT
+        ma.`area_id` AS areaId,
+        ma.`area_name` AS areaName
+        FROM
+        mxx_administrative_region ma
+        where
+        <choose>
+            <when test="areaId!=''">
+                ma.`parent` = #{areaId}
+            </when>
+            <otherwise>
+                ma.`type_name`="province"
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
