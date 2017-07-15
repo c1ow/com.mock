@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!--依赖注入MockAutoModel-->
+    <bean id="mockAutoModel" class="com.mock.model.MockAutoModel">
+    </bean>
+    <!--注入集合-->
+    <bean id="collection" class="com.mock.model.Collection">
+        <property name="list">
+            <list>
+                <value>cn</value>
+                <value>usa</value>
+                <value>changwei</value>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>cn</value>
+                <value>cn</value>
+                <value>cn</value>
+                <value>cn</value>
+                <value>usa</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="name" value="xuzz"/>
+                <entry key="age" value="18"/>
+                <entry key="sex" value="男"/>
+            </map>
+        </property>
+    </bean>
+</beans>

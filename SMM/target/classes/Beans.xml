@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <bean id="mockModel" class="com.mock.model.MockModel"
+    autowire="byName">
+        <property name="message" value="Hello World!"/>
+        <!--依赖注入-->
+        <!--给构造方法（有参的）-->
+        <!--在进行依赖注入的时候如果想要注入一个对象使用ref,如果想要直接传递值就使用最下面的注入方法-->
+       <constructor-arg ref="sonBean"/>
+        <!--<constructor-arg type="数据类型" value="数值" index="在构造方法中的位置"/>-->
+        <!--<property name="mockAutoModel" ref="mockAutoModel"/>-->
+    </bean>
+    <!--父类模板-->
+    <bean id="beanTeamplate" abstract="true">
+        <property name="message1" value="value1"/>
+        <property name="message2" value="value2"/>
+        <property name="message3" value="value3"/>
+    </bean>
+    <!--继承父类-->
+    <!--p:name 注入数值，p:xx-ref 注入对象-->
+    <bean id="sonBean" class="com.mock.model.SonBean" parent="beanTeamplate" p:message2="valueX">
+        <!--<property name="message2" value="valueX"/>-->
+    </bean>
+
+    <!--关联其它的bean配置文件-->
+    <import resource="otherBean-Collection.xml"/>
+</beans>
